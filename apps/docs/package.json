@@ -1,0 +1,24 @@
+{
+  "name": "docs",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "astro build",
+    "check": "astro check",
+    "dev": "astro dev",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@solid-ui/astro-solid2": "workspace:*",
+    "@solidjs/web": "2.0.0-beta.19",
+    "astro": "7.1.0",
+    "solid-js": "2.0.0-beta.19"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.9",
+    "@tailwindcss/vite": "4.3.3",
+    "tailwindcss": "4.3.3",
+    "typescript": "6.0.3"
+  }
+}

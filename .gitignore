@@ -1,0 +1,10 @@
+node_modules
+dist
+.astro
+.turbo
+coverage
+playwright-report
+test-results
+.vitest-dump
+.DS_Store
+*.local

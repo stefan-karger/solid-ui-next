@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "IBM Plex Sans", "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", "SFMono-Regular", monospace;
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+    background: #080b10;
+  }
+
+  body {
+    min-width: 320px;
+    margin: 0;
+    color: #e8edf5;
+    background:
+      radial-gradient(circle at 15% 0%, rgb(27 103 89 / 24%), transparent 35rem),
+      linear-gradient(#080b10, #0d1118);
+  }
+
+  button {
+    cursor: pointer;
+  }
+}
