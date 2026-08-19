@@ -17,14 +17,14 @@
   },
   "devDependencies": {
     "@playwright/test": "1.61.1",
-    "@solidjs/web": "2.0.0-beta.19",
+    "@solidjs/web": "2.0.0-rc.1",
     "happy-dom": "20.10.6",
     "oxfmt": "0.59.0",
     "oxlint": "1.74.0",
-    "solid-js": "2.0.0-beta.19",
+    "solid-js": "2.0.0-rc.1",
     "turbo": "2.10.5",
     "typescript": "6.0.3",
-    "vite-plugin-solid": "3.0.0-next.12",
+    "vite-plugin-solid": "3.0.0-next.27",
     "vitest": "4.1.10"
   },
   "engines": {

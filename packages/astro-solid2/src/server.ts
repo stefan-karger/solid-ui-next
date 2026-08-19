@@ -4,7 +4,7 @@ import {
   createComponent,
   generateHydrationScript,
   renderToString,
-  renderToStringAsync,
+  renderToStream,
   ssr,
 } from "@solidjs/web";
 import type { NamedSSRLoadedRendererValue } from "astro";
@@ -86,7 +86,7 @@ async function renderToStaticMarkup(
 
   const componentHtml =
     renderStrategy === "async"
-      ? await renderToStringAsync(renderFn, {
+      ? await renderToStream(renderFn, {
           renderId,
           ...({ noScripts: !needsHydrate } as any),
         })

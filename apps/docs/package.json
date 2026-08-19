@@ -11,9 +11,9 @@
   },
   "dependencies": {
     "@solid-ui/astro-solid2": "workspace:*",
-    "@solidjs/web": "2.0.0-beta.19",
+    "@solidjs/web": "2.0.0-rc.1",
     "astro": "7.1.0",
-    "solid-js": "2.0.0-beta.19"
+    "solid-js": "2.0.0-rc.1"
   },
   "devDependencies": {
     "@astrojs/check": "0.9.9",

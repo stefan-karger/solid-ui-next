@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This is a private, temporary Astro renderer port for Solid 2 beta. It is disposable playground
+This is a private, temporary Astro renderer port for the Solid 2 release candidate. It is disposable playground
 infrastructure, not a package intended for general use.
 
 ## Source attribution

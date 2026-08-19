@@ -6,8 +6,8 @@ site.
 
 ## Status
 
-Solid 2 is beta software, and its maintainers describe this period as an ecosystem migration phase.
-APIs, behavior, and dependencies may change or contain bugs. The Astro integration here is a local
+Solid 2 is release candidate software. APIs, behavior, and dependencies may still change or contain
+bugs. The Astro integration here is a local
 compatibility port and is not intended to be published or maintained as an Astro fork.
 
 ## Requirements

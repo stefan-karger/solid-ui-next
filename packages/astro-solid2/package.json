@@ -15,17 +15,17 @@
   },
   "dependencies": {
     "vite": "8.0.13",
-    "vite-plugin-solid": "3.0.0-next.12"
+    "vite-plugin-solid": "3.0.0-next.27"
   },
   "devDependencies": {
-    "@solidjs/web": "2.0.0-beta.19",
+    "@solidjs/web": "2.0.0-rc.1",
     "astro": "7.1.0",
-    "solid-js": "2.0.0-beta.19",
+    "solid-js": "2.0.0-rc.1",
     "typescript": "6.0.3"
   },
   "peerDependencies": {
-    "@solidjs/web": "2.0.0-beta.19",
+    "@solidjs/web": "2.0.0-rc.1",
     "astro": "7.1.0",
-    "solid-js": "2.0.0-beta.19"
+    "solid-js": "2.0.0-rc.1"
   }
 }
