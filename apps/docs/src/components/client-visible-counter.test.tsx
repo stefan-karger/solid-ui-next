@@ -1,7 +1,7 @@
 import { render } from "@solidjs/web";
 import { expect, it } from "vitest";
 
-import ClientVisibleCounter from "./ClientVisibleCounter";
+import ClientVisibleCounter from "./client-visible-counter";
 
 it("increments the visible counter", async () => {
   const host = document.createElement("div");

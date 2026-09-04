@@ -1,0 +1,19 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+import { cn } from "@/lib/utils";
+
+type Props = HTMLAttributes<"pre">;
+
+const { class: className, ...props } = Astro.props;
+const preContent = (await Astro.slots.render("default")).trim();
+---
+
+<pre
+  class={cn(
+    "no-scrollbar min-w-0 overflow-x-auto overflow-y-auto overscroll-x-contain overscroll-y-auto px-4 py-3.5 outline-none has-data-highlighted-line:px-0 has-data-line-numbers:px-0 has-data-[slot=tabs]:p-0",
+    className,
+  )}
+  set:html={preContent}
+  {...props}
+/>

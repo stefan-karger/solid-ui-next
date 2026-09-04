@@ -1,7 +1,7 @@
 import { render } from "@solidjs/web";
 import { expect, it } from "vitest";
 
-import ClientLoadCounter from "./ClientLoadCounter";
+import ClientLoadCounter from "./client-load-counter";
 
 it("increments the load counter", async () => {
   const host = document.createElement("div");

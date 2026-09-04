@@ -19,6 +19,9 @@ export default defineConfig({
   ],
   webServer: {
     command: "pnpm --filter docs preview --host 127.0.0.1",
+    env: {
+      ASTRO_PREVIEW_BACKGROUND: "0",
+    },
     url: "http://127.0.0.1:4321",
     reuseExistingServer: true,
   },

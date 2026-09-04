@@ -1,7 +1,7 @@
 import { render } from "@solidjs/web";
 import { expect, it } from "vitest";
 
-import ClientIdleCounter from "./ClientIdleCounter";
+import ClientIdleCounter from "./client-idle-counter";
 
 it("increments the idle counter", async () => {
   const host = document.createElement("div");

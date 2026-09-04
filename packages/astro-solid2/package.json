@@ -14,18 +14,18 @@
     "check": "tsc --noEmit"
   },
   "dependencies": {
-    "vite": "8.0.13",
+    "vite": "8.2.2",
     "vite-plugin-solid": "3.0.0-next.27"
   },
   "devDependencies": {
-    "@solidjs/web": "2.0.0-rc.1",
-    "astro": "7.1.0",
-    "solid-js": "2.0.0-rc.1",
+    "@solidjs/web": "2.0.0-rc.6",
+    "astro": "7.3.1",
+    "solid-js": "2.0.0-rc.6",
     "typescript": "6.0.3"
   },
   "peerDependencies": {
-    "@solidjs/web": "2.0.0-rc.1",
-    "astro": "7.1.0",
-    "solid-js": "2.0.0-rc.1"
+    "@solidjs/web": "2.0.0-rc.6",
+    "astro": "7.3.1",
+    "solid-js": "2.0.0-rc.6"
   }
 }

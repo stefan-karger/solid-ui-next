@@ -1,7 +1,7 @@
 import { render } from "@solidjs/web";
 import { expect, it } from "vitest";
 
-import ClientMediaCounter from "./ClientMediaCounter";
+import ClientMediaCounter from "./client-media-counter";
 
 it("increments the media counter", async () => {
   const host = document.createElement("div");

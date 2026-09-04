@@ -1,7 +1,7 @@
 import { render } from "@solidjs/web";
 import { expect, it } from "vitest";
 
-import ClientOnlyCounter from "./ClientOnlyCounter";
+import ClientOnlyCounter from "./client-only-counter";
 
 it("increments the client-only counter", async () => {
   const host = document.createElement("div");

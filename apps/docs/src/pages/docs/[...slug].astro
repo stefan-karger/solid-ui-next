@@ -1,0 +1,32 @@
+---
+import { getCollection, render, type CollectionEntry } from "astro:content";
+
+import { mdxComponents } from "@/components/mdx-components";
+import DocsLayout from "@/layouts/docs-layout.astro";
+
+export async function getStaticPaths() {
+  const pages = await getCollection("docs");
+
+  return pages.map((page) => ({
+    params: { slug: page.id },
+    props: { page },
+  }));
+}
+
+type Props = {
+  page: CollectionEntry<"docs">;
+};
+
+const { page } = Astro.props;
+const { Content } = await render(page);
+---
+
+<DocsLayout title={page.data.title}>
+  <section
+    aria-label="MDX component examples"
+    class="mx-auto w-full max-w-2xl px-4 py-4 font-sans [&_[data-rehype-pretty-code-figure]:first-child]:mt-0 sm:py-8"
+    data-slot="docs"
+  >
+    <Content components={mdxComponents} />
+  </section>
+</DocsLayout>
