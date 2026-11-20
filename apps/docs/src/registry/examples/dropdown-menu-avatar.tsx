@@ -19,8 +19,11 @@ import {
 export default function DropdownMenuAvatar() {
   return (
     <div class="flex w-full max-w-sm items-center justify-between gap-4">
-      <DropdownMenu placement="top-end">
-        <DropdownMenuTrigger as={Button} class="h-12 w-full justify-start px-2" variant="outline">
+      <DropdownMenu>
+        <DropdownMenuTrigger
+          render={(partProps) => <Button {...partProps} variant="outline" />}
+          class="h-12 w-full justify-start px-2"
+        >
           <img
             alt="shadcn"
             class="size-8 rounded-full object-cover"
@@ -28,11 +31,17 @@ export default function DropdownMenuAvatar() {
           />
           <div class="grid flex-1 text-left text-sm leading-tight">
             <span class="truncate font-semibold">shadcn</span>
-            <span class="truncate text-xs text-muted-foreground">shadcn@example.com</span>
+            <span class="truncate text-xs text-muted-foreground">
+              shadcn@example.com
+            </span>
           </div>
           <ChevronsUpDownIcon class="ml-auto size-4 text-muted-foreground" />
         </DropdownMenuTrigger>
-        <DropdownMenuContent class="w-(--kb-popper-anchor-width) min-w-56">
+        <DropdownMenuContent
+          side="top"
+          align="end"
+          class="w-(--anchor-width) min-w-56"
+        >
           <DropdownMenuGroup>
             <DropdownMenuItem>
               <BadgeCheckIcon class="size-4" />
@@ -56,7 +65,12 @@ export default function DropdownMenuAvatar() {
       </DropdownMenu>
 
       <DropdownMenu>
-        <DropdownMenuTrigger as={Button} class="rounded-full" size="icon" variant="ghost">
+        <DropdownMenuTrigger
+          render={(partProps) => (
+            <Button {...partProps} size="icon" variant="ghost" />
+          )}
+          class="rounded-full"
+        >
           <img
             alt="shadcn"
             class="size-8 rounded-full object-cover"

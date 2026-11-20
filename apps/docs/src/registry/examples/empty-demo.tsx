@@ -19,7 +19,8 @@ export default function EmptyDemo() {
         </EmptyMedia>
         <EmptyTitle>No projects yet</EmptyTitle>
         <EmptyDescription>
-          You haven&apos;t created any projects yet. Get started by creating your first project.
+          You haven&apos;t created any projects yet. Get started by creating
+          your first project.
         </EmptyDescription>
       </EmptyHeader>
       <EmptyContent>
@@ -27,7 +28,7 @@ export default function EmptyDemo() {
           <Button>Create project</Button>
           <Button variant="outline">Import project</Button>
         </div>
-        <Button as="a" class="text-muted-foreground" href="#" variant="link">
+        <Button as="a" href="#" variant="link" class="text-muted-foreground">
           Learn more <ArrowUpRightIcon />
         </Button>
       </EmptyContent>

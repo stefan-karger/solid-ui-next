@@ -1,8 +1,8 @@
-import { Dynamic } from "@solidjs/web"
 import {
   Bell,
   Calculator,
   Calendar,
+  CircleQuestionMarkIcon,
   ClipboardPaste,
   Code,
   Copy,
@@ -10,7 +10,6 @@ import {
   FileText,
   Folder,
   FolderPlus,
-  CircleQuestionMarkIcon,
   HouseIcon,
   Image,
   Inbox,
@@ -25,6 +24,7 @@ import {
   ZoomOut,
   type LucideIcon
 } from "lucide-solid"
+import { For } from "solid-js"
 import { createMemo, createSignal, Show } from "solid-js"
 
 import { Button } from "~/registry/ui/button"
@@ -59,7 +59,12 @@ const options: CommandGroupOption[] = [
     items: [
       { value: "home", label: "Home", shortcut: "⌘H", icon: HouseIcon },
       { value: "inbox", label: "Inbox", shortcut: "⌘I", icon: Inbox },
-      { value: "documents", label: "Documents", shortcut: "⌘D", icon: FileText },
+      {
+        value: "documents",
+        label: "Documents",
+        shortcut: "⌘D",
+        icon: FileText
+      },
       { value: "folders", label: "Folders", shortcut: "⌘F", icon: Folder }
     ]
   },
@@ -67,7 +72,12 @@ const options: CommandGroupOption[] = [
     heading: "Actions",
     items: [
       { value: "new-file", label: "New File", shortcut: "⌘N", icon: Plus },
-      { value: "new-folder", label: "New Folder", shortcut: "⇧⌘N", icon: FolderPlus },
+      {
+        value: "new-folder",
+        label: "New Folder",
+        shortcut: "⇧⌘N",
+        icon: FolderPlus
+      },
       { value: "copy", label: "Copy", shortcut: "⌘C", icon: Copy },
       { value: "cut", label: "Cut", shortcut: "⌘X", icon: Scissors },
       { value: "paste", label: "Paste", shortcut: "⌘V", icon: ClipboardPaste },
@@ -90,7 +100,11 @@ const options: CommandGroupOption[] = [
       { value: "billing", label: "Billing", shortcut: "⌘B", icon: CreditCard },
       { value: "settings", label: "Settings", shortcut: "⌘S", icon: Settings },
       { value: "notifications", label: "Notifications", icon: Bell },
-      { value: "help-support", label: "Help & Support", icon: CircleQuestionMarkIcon }
+      {
+        value: "help-support",
+        label: "Help & Support",
+        icon: CircleQuestionMarkIcon
+      }
     ]
   },
   {
@@ -142,34 +156,39 @@ export default function CommandScrollable() {
         Open Menu
       </Button>
       <CommandDialog onOpenChange={handleOpenChange} open={open()}>
-        <Command<CommandOption, CommandGroupOption>
-          onInputChange={setQuery}
-          placeholder="Type a command or search..."
-          options={filteredOptions()}
-          optionGroupChildren="items"
-          optionValue="value"
-          optionTextValue="label"
-          optionLabel="label"
-          itemComponent={(props) => (
-            <CommandItem item={props.item}>
-              <Dynamic class="size-4" component={props.item.rawValue.icon} />
-              <span>{props.item.rawValue.label}</span>
-              <Show when={props.item.rawValue.shortcut}>
-                {(shortcut) => <CommandShortcut>{shortcut()}</CommandShortcut>}
-              </Show>
-            </CommandItem>
-          )}
-          sectionComponent={(props) => (
-            <>
-              {props.section.index > 0 ? <CommandSeparator /> : null}
-              <CommandGroup>
-                <CommandGroupLabel>{props.section.rawValue.heading}</CommandGroupLabel>
-              </CommandGroup>
-            </>
-          )}
-        >
-          <CommandInput />
-          <CommandList />
+        <Command onQueryChange={setQuery}>
+          <CommandInput
+            placeholder="Type a command or search..."
+            aria-label="Type a command or search..."
+          />
+          <CommandList>
+            <For each={filteredOptions()}>
+              {(group, groupIndex) => (
+                <>
+                  {groupIndex() > 0 ? <CommandSeparator /> : null}
+                  <CommandGroup>
+                    <CommandGroupLabel>{group.heading}</CommandGroupLabel>
+                    <For each={group["items"]}>
+                      {(option) => (
+                        <CommandItem
+                          value={option["value"]}
+                          label={option["label"]}
+                        >
+                          <option.icon class="size-4" />
+                          <span>{option.label}</span>
+                          <Show when={option.shortcut}>
+                            {(shortcut) => (
+                              <CommandShortcut>{shortcut()}</CommandShortcut>
+                            )}
+                          </Show>
+                        </CommandItem>
+                      )}
+                    </For>
+                  </CommandGroup>
+                </>
+              )}
+            </For>
+          </CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
         </Command>
       </CommandDialog>

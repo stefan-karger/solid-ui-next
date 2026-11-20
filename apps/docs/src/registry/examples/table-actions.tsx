@@ -9,7 +9,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from "~/registry/ui/dropdown-menu"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "~/registry/ui/table"
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow
+} from "~/registry/ui/table"
 
 const products = [
   {
@@ -46,16 +53,23 @@ export default function TableActions() {
               <TableCell class="font-medium">{product.name}</TableCell>
               <TableCell>{product.price}</TableCell>
               <TableCell class="text-right">
-                <DropdownMenu placement="bottom-end">
-                  <DropdownMenuTrigger as={Button} class="size-8" size="icon" variant="ghost">
+                <DropdownMenu>
+                  <DropdownMenuTrigger
+                    render={(partProps) => (
+                      <Button {...partProps} size="icon" variant="ghost" />
+                    )}
+                    class="size-8"
+                  >
                     <EllipsisIcon />
                     <span class="sr-only">Open menu</span>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent>
+                  <DropdownMenuContent side="bottom" align="end">
                     <DropdownMenuItem>Edit</DropdownMenuItem>
                     <DropdownMenuItem>Duplicate</DropdownMenuItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem variant="destructive">Delete</DropdownMenuItem>
+                    <DropdownMenuItem variant="destructive">
+                      Delete
+                    </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </TableCell>

@@ -1,14 +1,14 @@
 import { Avatar, AvatarFallback, AvatarImage } from "~/registry/ui/avatar"
 
-export default function AvatarBasic() {
+export default function AvatarDemo() {
   return (
     <Avatar>
       <AvatarImage
-        alt="@stefan-karger"
+        src="https://github.com/shadcn.png"
+        alt="@shadcn"
         class="grayscale"
-        src="https://github.com/stefan-karger.png"
       />
-      <AvatarFallback>SK</AvatarFallback>
+      <AvatarFallback>CN</AvatarFallback>
     </Avatar>
   )
 }

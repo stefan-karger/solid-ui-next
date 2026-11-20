@@ -1,32 +1,36 @@
-import { Dynamic } from "@solidjs/web"
+import { dynamic } from "@solidjs/web"
 import {
   AudioWaveformIcon,
   BadgeCheckIcon,
   BellIcon,
   BookOpenIcon,
   BotIcon,
+  ChartPieIcon,
   ChevronRightIcon,
   ChevronsUpDownIcon,
   CommandIcon,
   CreditCardIcon,
+  EllipsisIcon,
   FolderIcon,
   ForwardIcon,
   FrameIcon,
   GalleryVerticalEndIcon,
   LogOutIcon,
   MapIcon,
-  EllipsisIcon,
-  ChartPieIcon,
   PlusIcon,
   Settings2Icon,
   SparklesIcon,
   SquareTerminalIcon,
   TrashIcon
 } from "lucide-solid"
-import { createSignal, For, Show } from "solid-js"
+import { createSignal, For, Show, untrack } from "solid-js"
 
 import { Avatar, AvatarFallback, AvatarImage } from "~/registry/ui/avatar"
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "~/registry/ui/collapsible"
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger
+} from "~/registry/ui/collapsible"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -190,21 +194,25 @@ const data = {
 
 function TeamSwitcher(props: { teams: typeof data.teams }) {
   const { isMobile } = useSidebar()
-  const [activeTeam, setActiveTeam] = createSignal(props.teams[0])
+  const [activeTeam, setActiveTeam] = createSignal(
+    untrack(() => props.teams[0])
+  )
+  const TeamLogo = dynamic(() => activeTeam()?.logo)
 
   return (
     <Show when={activeTeam()}>
       {(team) => (
         <SidebarMenu>
           <SidebarMenuItem>
-            <DropdownMenu placement={isMobile() ? "bottom-start" : "right-start"}>
+            <DropdownMenu>
               <DropdownMenuTrigger
-                as={SidebarMenuButton}
+                render={(partProps) => (
+                  <SidebarMenuButton {...partProps} size="lg" />
+                )}
                 class="data-[expanded]:bg-sidebar-accent data-[expanded]:text-sidebar-accent-foreground"
-                size="lg"
               >
                 <div class="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                  <Dynamic class="size-4" component={team().logo} />
+                  <TeamLogo class="size-4" />
                 </div>
                 <div class="grid flex-1 text-left text-sm leading-tight">
                   <span class="truncate font-medium">{team().name}</span>
@@ -212,17 +220,28 @@ function TeamSwitcher(props: { teams: typeof data.teams }) {
                 </div>
                 <ChevronsUpDownIcon class="ml-auto" />
               </DropdownMenuTrigger>
-              <DropdownMenuContent class="w-(--kb-popper-anchor-width) min-w-56 rounded-lg">
+              <DropdownMenuContent
+                side={isMobile() ? "bottom" : "right"}
+                align="start"
+                class="w-(--anchor-width) min-w-56 rounded-lg"
+              >
                 <DropdownMenuGroup>
-                  <DropdownMenuLabel class="text-xs text-muted-foreground">Teams</DropdownMenuLabel>
+                  <DropdownMenuLabel class="text-xs text-muted-foreground">
+                    Teams
+                  </DropdownMenuLabel>
                   <For each={props.teams}>
                     {(option, index) => (
-                      <DropdownMenuItem class="gap-2 p-2" onSelect={() => setActiveTeam(option)}>
+                      <DropdownMenuItem
+                        class="gap-2 p-2"
+                        onSelect={() => setActiveTeam(option)}
+                      >
                         <div class="flex size-6 items-center justify-center rounded-md border">
-                          <Dynamic class="size-3.5 shrink-0" component={option.logo} />
+                          <option.logo class="size-3.5 shrink-0" />
                         </div>
                         {option.name}
-                        <DropdownMenuShortcut>⌘{index() + 1}</DropdownMenuShortcut>
+                        <DropdownMenuShortcut>
+                          ⌘{index() + 1}
+                        </DropdownMenuShortcut>
                       </DropdownMenuItem>
                     )}
                   </For>
@@ -233,7 +252,9 @@ function TeamSwitcher(props: { teams: typeof data.teams }) {
                     <div class="flex size-6 items-center justify-center rounded-md border bg-transparent">
                       <PlusIcon class="size-4" />
                     </div>
-                    <div class="font-medium text-muted-foreground">Add team</div>
+                    <div class="font-medium text-muted-foreground">
+                      Add team
+                    </div>
                   </DropdownMenuItem>
                 </DropdownMenuGroup>
               </DropdownMenuContent>
@@ -252,10 +273,18 @@ function NavMain(props: { items: typeof data.navMain }) {
       <SidebarMenu>
         <For each={props.items}>
           {(item) => (
-            <Collapsible class="group/collapsible" defaultOpen={item.isActive ?? false}>
+            <Collapsible
+              class="group/collapsible"
+              defaultOpen={item.isActive ?? false}
+            >
               <SidebarMenuItem>
-                <CollapsibleTrigger as={SidebarMenuButton} class="" tooltip={item.title}>
-                  <Dynamic component={item.icon} />
+                <CollapsibleTrigger
+                  render={(partProps) => (
+                    <SidebarMenuButton {...partProps} tooltip={item.title} />
+                  )}
+                  class=""
+                >
+                  <item.icon />
                   <span>{item.title}</span>
                   <ChevronRightIcon class="ml-auto transition-transform duration-200 group-data-[expanded]/collapsible:rotate-90" />
                 </CollapsibleTrigger>
@@ -292,15 +321,24 @@ function NavProjects(props: { projects: typeof data.projects }) {
           {(item) => (
             <SidebarMenuItem>
               <SidebarMenuButton as="a" href={item.url}>
-                <Dynamic component={item.icon} />
+                <item.icon />
                 <span>{item.name}</span>
               </SidebarMenuButton>
-              <DropdownMenu placement={isMobile() ? "bottom-end" : "right-start"}>
-                <DropdownMenuTrigger as={SidebarMenuAction} class="" showOnHover>
+              <DropdownMenu>
+                <DropdownMenuTrigger
+                  render={(partProps) => (
+                    <SidebarMenuAction {...partProps} showOnHover />
+                  )}
+                  class=""
+                >
                   <EllipsisIcon />
                   <span class="sr-only">More</span>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent class="w-48 rounded-lg">
+                <DropdownMenuContent
+                  side={isMobile() ? "bottom" : "right"}
+                  align={isMobile() ? "end" : "start"}
+                  class="w-48 rounded-lg"
+                >
                   <DropdownMenuGroup>
                     <DropdownMenuItem>
                       <FolderIcon class="text-muted-foreground" />
@@ -340,11 +378,12 @@ function NavUser(props: { user: typeof data.user }) {
   return (
     <SidebarMenu>
       <SidebarMenuItem>
-        <DropdownMenu placement={isMobile() ? "bottom-end" : "right-end"}>
+        <DropdownMenu>
           <DropdownMenuTrigger
-            as={SidebarMenuButton}
+            render={(partProps) => (
+              <SidebarMenuButton {...partProps} size="lg" />
+            )}
             class="data-[expanded]:bg-sidebar-accent data-[expanded]:text-sidebar-accent-foreground"
-            size="lg"
           >
             <Avatar class="size-8 rounded-lg">
               <AvatarImage alt={props.user.name} src={props.user.avatar} />
@@ -356,12 +395,19 @@ function NavUser(props: { user: typeof data.user }) {
             </div>
             <ChevronsUpDownIcon class="ml-auto size-4" />
           </DropdownMenuTrigger>
-          <DropdownMenuContent class="w-(--kb-popper-anchor-width) min-w-56 rounded-lg">
+          <DropdownMenuContent
+            side={isMobile() ? "bottom" : "right"}
+            align="end"
+            class="w-(--anchor-width) min-w-56 rounded-lg"
+          >
             <DropdownMenuGroup>
               <DropdownMenuLabel class="p-0 font-normal">
                 <div class="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                   <Avatar class="size-8 rounded-lg">
-                    <AvatarImage alt={props.user.name} src={props.user.avatar} />
+                    <AvatarImage
+                      alt={props.user.name}
+                      src={props.user.avatar}
+                    />
                     <AvatarFallback class="rounded-lg">SK</AvatarFallback>
                   </Avatar>
                   <div class="grid flex-1 text-left text-sm leading-tight">

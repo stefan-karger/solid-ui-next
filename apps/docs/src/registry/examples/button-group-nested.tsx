@@ -2,7 +2,11 @@ import { AudioLinesIcon, PlusIcon } from "lucide-solid"
 
 import { Button } from "~/registry/ui/button"
 import { ButtonGroup } from "~/registry/ui/button-group"
-import { InputGroup, InputGroupAddon, InputGroupInput } from "~/registry/ui/input-group"
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput
+} from "~/registry/ui/input-group"
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/registry/ui/tooltip"
 
 export default function ButtonGroupNested() {
@@ -17,7 +21,11 @@ export default function ButtonGroupNested() {
         <InputGroup>
           <InputGroupInput placeholder="Send a message..." />
           <Tooltip>
-            <TooltipTrigger as={InputGroupAddon} align="inline-end">
+            <TooltipTrigger
+              render={(partProps) => (
+                <InputGroupAddon {...partProps} align="inline-end" />
+              )}
+            >
               <AudioLinesIcon />
             </TooltipTrigger>
             <TooltipContent>Voice Mode</TooltipContent>

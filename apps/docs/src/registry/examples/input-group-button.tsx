@@ -38,8 +38,17 @@ export default function InputGroupButtonExample() {
       <InputGroup>
         <InputGroupInput placeholder="https://x.com/shadcn" readonly />
         <InputGroupAddon align="inline-end">
-          <InputGroupButton aria-label="Copy" onClick={handleCopy} size="icon-xs" title="Copy">
-            {isCopied() ? <CheckIcon class="size-4" /> : <CopyIcon class="size-4" />}
+          <InputGroupButton
+            aria-label="Copy"
+            onClick={handleCopy}
+            size="icon-xs"
+            title="Copy"
+          >
+            {isCopied() ? (
+              <CheckIcon class="size-4" />
+            ) : (
+              <CopyIcon class="size-4" />
+            )}
           </InputGroupButton>
         </InputGroupAddon>
       </InputGroup>
@@ -47,18 +56,30 @@ export default function InputGroupButtonExample() {
       <InputGroup class="[--radius:9999px]">
         <InputGroupAddon>
           <Popover>
-            <PopoverTrigger as={InputGroupButton} size="icon-xs" variant="secondary">
+            <PopoverTrigger
+              render={(partProps) => (
+                <InputGroupButton
+                  {...partProps}
+                  size="icon-xs"
+                  variant="secondary"
+                />
+              )}
+            >
               <InfoIcon class="size-4" />
             </PopoverTrigger>
             <PopoverContent class="rounded-xl text-sm">
-              <PopoverTitle class="text-sm">Your connection is not secure.</PopoverTitle>
+              <PopoverTitle class="text-sm">
+                Your connection is not secure.
+              </PopoverTitle>
               <PopoverDescription>
                 You should not enter any sensitive information on this site.
               </PopoverDescription>
             </PopoverContent>
           </Popover>
         </InputGroupAddon>
-        <InputGroupAddon class="pl-1.5 text-muted-foreground">https://</InputGroupAddon>
+        <InputGroupAddon class="pl-1.5 text-muted-foreground">
+          https://
+        </InputGroupAddon>
         <InputGroupInput />
         <InputGroupAddon align="inline-end">
           <InputGroupButton
@@ -69,7 +90,9 @@ export default function InputGroupButtonExample() {
           >
             <StarIcon
               class="size-4"
-              style={isFavorite() ? { color: "var(--color-primary)" } : undefined}
+              style={
+                isFavorite() ? { color: "var(--color-primary)" } : undefined
+              }
             />
           </InputGroupButton>
         </InputGroupAddon>

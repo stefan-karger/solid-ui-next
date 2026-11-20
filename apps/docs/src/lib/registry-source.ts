@@ -1,6 +1,13 @@
 export const ACTIVE_REGISTRY_STYLE = "nova"
 
-export type RegistrySourceLanguage = "tsx" | "ts" | "jsx" | "js" | "css" | "json" | "text"
+export type RegistrySourceLanguage =
+  | "tsx"
+  | "ts"
+  | "jsx"
+  | "js"
+  | "css"
+  | "json"
+  | "text"
 
 export type PreparedRegistrySource = {
   code: string
@@ -22,7 +29,13 @@ const INTERNAL_ALIASES = [
   ["~/registry/hooks/", "~/hooks/"]
 ] as const
 
-const SCRIPT_LANGUAGES = new Set<RegistrySourceLanguage>(["tsx", "ts", "jsx", "js"])
+const SCRIPT_LANGUAGES = new Set<RegistrySourceLanguage>([
+  "tsx",
+  "ts",
+  "jsx",
+  "js"
+])
+const preparedStyleMaps = new Map<string, Map<string, string>>()
 
 export function inferRegistryLanguage(path: string): RegistrySourceLanguage {
   const extension = path.split(".").pop()?.toLowerCase()
@@ -36,13 +49,19 @@ export function inferRegistryLanguage(path: string): RegistrySourceLanguage {
     : "text"
 }
 
-export function getRegistryDisplayPath(registryPath: string, target?: string): string {
+export function getRegistryDisplayPath(
+  registryPath: string,
+  target?: string
+): string {
   if (target) return target
   if (registryPath.startsWith("ui/")) return `components/${registryPath}`
   return registryPath
 }
 
-export function extractStyleMap(styleCss: string, styleName: string): Map<string, string> {
+export function extractStyleMap(
+  styleCss: string,
+  styleName: string
+): Map<string, string> {
   const result = new Map<string, string>()
   const selector = /\.((?:cn-)[a-z0-9-]+)\s*\{/g
   let match: RegExpExecArray | null
@@ -68,16 +87,22 @@ export function extractStyleMap(styleCss: string, styleName: string): Map<string
     }
 
     if (depth !== 0) {
-      throw new Error(`[registry-source] Malformed .${token} rule in style-${styleName}.css`)
+      throw new Error(
+        `[registry-source] Malformed .${token} rule in style-${styleName}.css`
+      )
     }
 
     const body = styleCss.slice(selector.lastIndex, cursor - 1)
-    const utilities = [...body.matchAll(/@apply\s+([^;]+);/g)]
+    const utilities = [...body.matchAll(/@apply\s+([^;]+?)(?:;|$)/g)]
       .map((apply) => apply[1]!.trim())
       .filter(Boolean)
       .join(" ")
 
     if (!utilities) {
+      if (!body.replace(/\/\*[\s\S]*?\*\//g, "").trim()) {
+        selector.lastIndex = cursor
+        continue
+      }
       throw new Error(
         `[registry-source] .${token} has no @apply declaration in style-${styleName}.css`
       )
@@ -90,7 +115,9 @@ export function extractStyleMap(styleCss: string, styleName: string): Map<string
       )
     }
     if (previous) {
-      throw new Error(`[registry-source] Duplicate .${token} definition in style-${styleName}.css`)
+      throw new Error(
+        `[registry-source] Duplicate .${token} definition in style-${styleName}.css`
+      )
     }
 
     result.set(token, utilities)
@@ -130,9 +157,14 @@ function replaceSemanticTokens(
         const utilities = styleMap.get(token)
         if (!utilities) return ""
 
-        const leadingWhitespace = segment.slice(0, segment.length - token.length)
+        const leadingWhitespace = segment.slice(
+          0,
+          segment.length - token.length
+        )
         const escapedUtilities =
-          quote === "'" ? utilities.replaceAll("'", "\\'") : utilities.replaceAll('"', '\\"')
+          quote === "'"
+            ? utilities.replaceAll("'", "\\'")
+            : utilities.replaceAll('"', '\\"')
         return `${leadingWhitespace}${escapedUtilities}`
       })
       .trim()
@@ -155,18 +187,22 @@ export async function prepareRegistrySource(
         `[registry-source] Missing style-${options.styleName}.css while preparing ${options.registryPath}`
       )
     }
-    code = replaceSemanticTokens(
-      code,
-      extractStyleMap(options.styleCss, options.styleName),
-      options.registryPath
-    )
+    const styleMap =
+      preparedStyleMaps.get(options.styleCss) ??
+      extractStyleMap(options.styleCss, options.styleName)
+    preparedStyleMaps.set(options.styleCss, styleMap)
+    code = replaceSemanticTokens(code, styleMap, options.registryPath)
   }
 
   if (/~\/registry\/(?:ui|lib|hooks)\//.test(code)) {
-    throw new Error(`[registry-source] Internal registry alias remains in ${options.registryPath}`)
+    throw new Error(
+      `[registry-source] Internal registry alias remains in ${options.registryPath}`
+    )
   }
   if (SCRIPT_LANGUAGES.has(language) && /\bcn-[a-z0-9-]+\b/.test(code)) {
-    throw new Error(`[registry-source] Semantic class remains in ${options.registryPath}`)
+    throw new Error(
+      `[registry-source] Semantic class remains in ${options.registryPath}`
+    )
   }
 
   return {

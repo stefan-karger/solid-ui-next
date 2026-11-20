@@ -1,4 +1,9 @@
-import { CreditCardIcon, LogOutIcon, SettingsIcon, UserIcon } from "lucide-solid"
+import {
+  CreditCardIcon,
+  LogOutIcon,
+  SettingsIcon,
+  UserIcon
+} from "lucide-solid"
 
 import { Button } from "~/registry/ui/button"
 import {
@@ -12,7 +17,10 @@ import {
 export default function DropdownMenuIcons() {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger as={Button} class="w-fit" variant="outline">
+      <DropdownMenuTrigger
+        render={(partProps) => <Button {...partProps} variant="outline" />}
+        class="w-fit"
+      >
         Open
       </DropdownMenuTrigger>
       <DropdownMenuContent>

@@ -56,20 +56,25 @@ const content = {
 
 function TranslationPopover() {
   return (
-    <Popover placement="bottom-end">
-      <PopoverTrigger as={Button} variant="ghost" size="icon-sm" class="ml-auto size-7">
+    <Popover>
+      <PopoverTrigger
+        render={(partProps) => (
+          <Button {...partProps} variant="ghost" size="icon-sm" />
+        )}
+        class="ml-auto size-7"
+      >
         <CircleAlertIcon />
         <span class="sr-only">Toggle</span>
       </PopoverTrigger>
-      <PopoverContent class="w-56 text-xs">
+      <PopoverContent side="bottom" align="end" class="w-56 text-xs">
         <div>
-          I used AI to translate the text for demonstration purposes. It&apos;s not perfect and may
-          contain errors.
+          I used AI to translate the text for demonstration purposes. It&apos;s
+          not perfect and may contain errors.
         </div>
         <Separator class="-mx-2.5 w-auto!" />
         <div data-lang="ar">
-          لقد استخدمت الذكاء الاصطناعي لترجمة النص للأغراض التجريبية فقط. قد لا تكون الترجمة دقيقة وقد
-          تحتوي على أخطاء.
+          لقد استخدمت الذكاء الاصطناعي لترجمة النص للأغراض التجريبية فقط. قد لا
+          تكون الترجمة دقيقة وقد تحتوي على أخطاء.
         </div>
       </PopoverContent>
     </Popover>
@@ -104,7 +109,9 @@ function DirectionCard(props: { language: Language }) {
               </div>
               <div class="grid gap-2">
                 <div class="flex items-center">
-                  <Label for={`password-${props.language}`}>{values().password}</Label>
+                  <Label for={`password-${props.language}`}>
+                    {values().password}
+                  </Label>
                   <a
                     class="ms-auto inline-block text-sm underline-offset-4 hover:underline"
                     href="#"
@@ -112,7 +119,11 @@ function DirectionCard(props: { language: Language }) {
                     {values().forgotPassword}
                   </a>
                 </div>
-                <Input id={`password-${props.language}`} required type="password" />
+                <Input
+                  id={`password-${props.language}`}
+                  required
+                  type="password"
+                />
               </div>
             </div>
           </form>
@@ -136,7 +147,7 @@ export default function DirectionDemo() {
   return (
     <Tabs
       class="flex w-full max-w-sm flex-col items-center gap-4"
-      onChange={(value) => setLanguage(value as Language)}
+      onValueChange={(value) => setLanguage(value as Language)}
       value={language()}
     >
       <TabsList class="w-full">

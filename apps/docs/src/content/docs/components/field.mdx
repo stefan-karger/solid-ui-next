@@ -4,7 +4,10 @@ description: Combine labels, controls, and help text to compose accessible form 
 component: true
 ---
 
-<ComponentPreview name="field-demo" previewClassName="h-[800px] p-6 md:h-[850px]" />
+<ComponentPreview
+  name="field-demo"
+  previewClassName="h-[800px] p-6 md:h-[850px]"
+/>
 
 ## Installation
 
@@ -26,6 +29,18 @@ npx solidui-cli@latest add field
 <TabsContent value="manual">
 
 <Steps class="mb-0 pt-2">
+
+<Step>Install the following dependencies:</Step>
+
+```bash
+npm install class-variance-authority
+```
+
+<Step>Install the required Solid UI dependencies:</Step>
+
+```bash
+npx solidui-cli@latest add label separator
+```
 
 <Step>Copy and paste the following code into your project.</Step>
 
@@ -148,59 +163,64 @@ The `Field` family is designed for composing accessible forms. A typical field i
 - `FieldContent` is a flex column that groups labels, descriptions, and errors.
 - Wrap related fields with `FieldGroup`, and use `FieldSet` with `FieldLegend` for semantic grouping.
 
-## Examples
+## Form
 
-### Input
+See the [Form](/docs/forms) documentation for building forms with the `Field` component and [React Hook Form](/docs/forms/react-hook-form), [Tanstack Form](/docs/forms/tanstack-form), or [Formisch](/docs/forms/formisch).
+
+## Input
 
 <ComponentPreview name="field-input" />
 
-### Textarea
+## Textarea
 
 <ComponentPreview name="field-textarea" />
 
-### Select
+## Select
 
 <ComponentPreview name="field-select" />
 
-### Slider
+## Slider
 
 <ComponentPreview name="field-slider" />
 
-### Fieldset
+## Fieldset
 
 <ComponentPreview name="field-fieldset" />
 
-### Checkbox
+## Checkbox
 
 <ComponentPreview name="field-checkbox" previewClassName="h-[32rem]" />
 
-### Radio
+## Radio
 
 <ComponentPreview name="field-radio" />
 
-### Switch
+## Switch
 
 <ComponentPreview name="field-switch" />
 
-### Choice Card
+## Choice Card
 
-Wrap `Field` components inside `FieldLabel` to create selectable field groups.
+Wrap each horizontal `Field` in a `FieldLabel` to make the whole choice card selectable. This example uses `RadioGroupItem`.
 
 <ComponentPreview name="field-choice-card" />
 
-### Field Group
+## Field Group
 
-Stack `Field` components with `FieldGroup`. Add `FieldSeparator` to divide sections.
+Stack `Field` components with `FieldGroup`. Add `FieldSeparator` to divide them.
 
 <ComponentPreview name="field-group" previewClassName="h-96" />
 
 ## Responsive Layout
 
-- **Vertical fields:** Default orientation stacks label, control, and helper text for mobile-first layouts.
-- **Horizontal fields:** Set `orientation="horizontal"` on `Field` to align label and control side by side.
-- **Responsive fields:** Set `orientation="responsive"` and use container-aware `FieldGroup` classes to adapt by width.
+- **Vertical fields:** Default orientation stacks label, control, and helper text—ideal for mobile-first layouts.
+- **Horizontal fields:** Set `orientation="horizontal"` on `Field` to align the label and control side-by-side. Pair with `FieldContent` to keep descriptions aligned.
+- **Responsive fields:** Set `orientation="responsive"` for automatic column layouts inside container-aware parents. Apply `@container/field-group` classes on `FieldGroup` to switch orientations at specific breakpoints.
 
-<ComponentPreview name="field-responsive" previewClassName="h-[650px] p-6 md:h-[500px] md:p-10" />
+<ComponentPreview
+  name="field-responsive"
+  previewClassName="h-[650px] p-6 md:h-[500px] md:p-10"
+/>
 
 ## Validation and Errors
 
